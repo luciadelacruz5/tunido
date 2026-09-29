@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El nido para tu bebé</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Newsreader:wght@400;500;600&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Twinkle+Star&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F9F3E7;
+    --card: #FBF8F1;
+    --blue: #C6D8DC;
+    --sage: #D0DFBE;
+    --white: #FFFFFF;
+    --ink: #2F2E2D;
+    --ink-soft: #2F2E2D;
+    --border: #E4DDD1;
+    --accent: #B41214;
+    --accent-dark: #8E0F10;
+    --accent-text: #FFFFFF;
+    --price: #B41214;
+    --radius: 14px;
+    --font-title: 'Newsreader', Georgia, 'Times New Roman', serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, .plan-name, .plan-price .amount {
+    font-family: var(--font-title);
+    font-weight: 500;
+    color: var(--accent);
+    line-height: 1.18;
+  }
+
+  a { text-decoration: none; color: inherit; }
+
+  .container { max-width: 480px; margin: 0 auto; padding: 0 22px; position: relative; z-index: 2; }
+
+  /* ---------- Buttons ---------- */
+  .btn-primary, .nav-cta {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    background: var(--accent);
+    color: var(--accent-text);
+  }
+  .btn-primary {
+    display: inline-block;
+    font-size: 15px;
+    padding: 14px 28px;
+    border-radius: 8px;
+    box-shadow: 0 6px 16px rgba(180, 18, 20, 0.25);
+  }
+  .btn-outline {
+    display: inline-block;
+    background: transparent;
+    color: var(--accent);
+    border: 2px solid var(--accent);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 12px 26px;
+    border-radius: 8px;
+  }
+
+  /* ---------- Header (stripes) ---------- */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: repeating-linear-gradient(90deg, #C6D8DC 0 30px, #F9F3E7 30px 60px);
+    filter: drop-shadow(0 2px 2px rgba(46, 43, 39, 0.14));
+  }
+  .nav::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0;
+    top: 100%;
+    height: 15px;
+    background: repeating-linear-gradient(90deg, #C6D8DC 0 30px, #F9F3E7 30px 60px);
+    -webkit-mask-image: radial-gradient(circle at 50% 0, #000 14.2px, transparent 15px);
+    mask-image: radial-gradient(circle at 50% 0, #000 14.2px, transparent 15px);
+    -webkit-mask-size: 30px 15px;
+    mask-size: 30px 15px;
+    -webkit-mask-repeat: repeat-x;
+    mask-repeat: repeat-x;
+  }
+  .nav-inner {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 12px 16px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+  }
+  .nav-inner .brand {
+    font-family: 'Twinkle Star', cursive;
+    font-size: 34px;
+    line-height: 1.05;
+    color: var(--accent);
+    text-align: center;
+    padding: 0 6px;
+  }
+  .lang-btn {
+    justify-self: start;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    background: #FBF8F1;
+    color: #6F685E;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 11px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 1px 3px rgba(46, 43, 39, 0.12);
+  }
+  .lang-btn:hover { color: var(--ink); }
+  .lang-btn #lang-flag { font-size: 14px; }
+  .nav-cta {
+    justify-self: end;
+    font-size: 13px;
+    padding: 9px 14px;
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    background: var(--cream);
+    border-bottom: 32px solid var(--blue);
+    padding: 52px 0 46px;
+  }
+  .hero-content { max-width: 480px; margin: 0 auto; padding: 0 22px; color: var(--ink); }
+  .hero-eyebrow {
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .hero h1 { font-size: 35px; margin-bottom: 14px; }
+  .hero p { font-size: 15.5px; color: var(--ink); max-width: 360px; margin-bottom: 26px; }
+
+  /* ---------- Intro (stripes + hand-drawn circles) ---------- */
+  .intro {
+    position: relative;
+    overflow: hidden;
+    background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2280%22%20height%3D%2244%22%20viewBox%3D%220%200%2080%2044%22%3E%3Crect%20width%3D%2280%22%20height%3D%2244%22%20fill%3D%22%23F9F3E7%22%2F%3E%3Cpath%20d%3D%22M16.36%2C-8%20L16.98%2C-6%20L17.84%2C-4%20L18.87%2C-2%20L20.00%2C0%20L21.13%2C2%20L22.16%2C4%20L23.02%2C6%20L23.64%2C8%20L23.96%2C10%20L23.96%2C12%20L23.64%2C14%20L23.02%2C16%20L22.16%2C18%20L21.13%2C20%20L20.00%2C22%20L18.87%2C24%20L17.84%2C26%20L16.98%2C28%20L16.36%2C30%20L16.04%2C32%20L16.04%2C34%20L16.36%2C36%20L16.98%2C38%20L17.84%2C40%20L18.87%2C42%20L20.00%2C44%20L21.13%2C46%20L22.16%2C48%20L23.02%2C50%20L23.64%2C52%22%20fill%3D%22none%22%20stroke%3D%22%23C6D8DC%22%20stroke-width%3D%2211%22%20stroke-linejoin%3D%22round%22%2F%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2222.0%22%20r%3D%228%22%20fill%3D%22%23D0DFBE%22%2F%3E%3C%2Fsvg%3E") repeat 0 0 / 80px 44px;
+    padding: 56px 0 46px;
+    text-align: center;
+    border-bottom: 32px solid var(--blue);
+  }
+  .intro-card {
+    background: #FBF8F1;
+    border: 2px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 30px 22px 28px;
+  }
+  .intro h2 { font-size: 28px; margin-bottom: 14px; }
+  .intro p { font-size: 15.5px; color: var(--ink-soft); margin-bottom: 8px; }
+  .blob { position: absolute; z-index: 1; pointer-events: none; }
+  .lang-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card);
+    border: 2px solid var(--sage);
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 14px;
+    color: var(--ink);
+  }
+
+  /* ---------- Section shell ---------- */
+  section { padding: 44px 0; }
+  .section-services { background: var(--cream); }
+  .section-label {
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ink);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .section-title { font-size: 29px; text-align: center; margin-bottom: 12px; }
+  .section-sub {
+    font-size: 15px;
+    text-align: center;
+    color: var(--ink-soft);
+    max-width: 380px;
+    margin: 0 auto 30px;
+  }
+
+  /* ---------- Pricing cards ---------- */
+  .plans { display: flex; flex-direction: column; gap: 20px; }
+  .plan {
+    background: var(--card);
+    border: 4px solid var(--sage);
+    border-radius: var(--radius);
+    padding: 26px 20px;
+    position: relative;
+  }
+  .plan--essential { border-color: var(--sage); }
+  .plan--integral { border-color: var(--blue); }
+  .plan.featured {
+    border-color: var(--accent);
+    box-shadow: 0 16px 32px rgba(46, 43, 39, 0.08);
+  }
+  .plan-badge {
+    position: absolute;
+    top: -16px;
+    left: 20px;
+    background: var(--accent);
+    color: var(--accent-text);
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    text-transform: uppercase;
+  }
+  .plan-name { font-size: 23px; margin-bottom: 4px; }
+  .plan-tagline { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 16px; }
+  .plan-price { display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px; }
+  .plan-price .amount { font-size: 34px; color: var(--price); }
+  .plan-price .period { font-size: 13px; color: var(--ink-soft); }
+
+  .plan-included-note {
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin: 14px 0 10px;
+    padding-top: 14px;
+    border-top: 2px dashed var(--border);
+  }
+
+  .plan ul { list-style: none; display: flex; flex-direction: column; gap: 9px; margin-bottom: 8px; }
+  .plan ul.inherited li {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--ink-soft);
+    padding-left: 20px;
+    position: relative;
+  }
+  .plan ul.inherited li::before { content: "—"; position: absolute; left: 0; color: var(--accent); }
+
+  .plan-category { margin-top: 16px; }
+  .plan-category-label {
+    font-size: 11.5px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .plan ul.new li {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--ink);
+    padding-left: 20px;
+    position: relative;
+  }
+  .plan ul.new li::before { content: "—"; position: absolute; left: 0; color: var(--ink); }
+
+  .plan-cronograma { margin-top: 4px; padding-left: 20px; display: flex; flex-direction: column; gap: 5px; }
+  .plan-cronograma li {
+    font-size: 13px;
+    color: var(--ink-soft);
+    list-style: none;
+    position: relative;
+    padding-left: 14px;
+  }
+  .plan-cronograma li::before { content: "·"; position: absolute; left: 0; color: var(--ink-soft); }
+
+  .plan-btn {
+    display: block;
+    text-align: center;
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14.5px;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    margin-top: 22px;
+  }
+  .plan.featured .plan-btn.plan-btn--outline {
+    background: transparent;
+    color: var(--accent);
+    border: 1.5px solid var(--accent);
+    box-shadow: none;
+  }
+
+  /* ---------- Process ---------- */
+  .process { background: var(--blue); position: relative; padding: 88px 0; }
+  .process::before, .process::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0;
+    height: 56px;
+    background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2260%22%20height%3D%2256%22%20viewBox%3D%220%200%2060%2056%22%3E%3Cpath%20d%3D%22M-8%2C34.03%20L-6%2C34.65%20L-4%2C35.37%20L-2%2C36.17%20L0%2C37.00%20L2%2C37.83%20L4%2C38.63%20L6%2C39.35%20L8%2C39.97%20L10%2C40.46%20L12%2C40.80%20L14%2C40.98%20L16%2C40.98%20L18%2C40.80%20L20%2C40.46%20L22%2C39.97%20L24%2C39.35%20L26%2C38.63%20L28%2C37.83%20L30%2C37.00%20L32%2C36.17%20L34%2C35.37%20L36%2C34.65%20L38%2C34.03%20L40%2C33.54%20L42%2C33.20%20L44%2C33.02%20L46%2C33.02%20L48%2C33.20%20L50%2C33.54%20L52%2C34.03%20L54%2C34.65%20L56%2C35.37%20L58%2C36.17%20L60%2C37.00%20L62%2C37.83%20L64%2C38.63%20L66%2C39.35%20L68%2C39.97%22%20fill%3D%22none%22%20stroke%3D%22%23D0DFBE%22%20stroke-width%3D%2224%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M-8%2C0%20L-8%2C21.03%20L-6%2C21.65%20L-4%2C22.37%20L-2%2C23.17%20L0%2C24.00%20L2%2C24.83%20L4%2C25.63%20L6%2C26.35%20L8%2C26.97%20L10%2C27.46%20L12%2C27.80%20L14%2C27.98%20L16%2C27.98%20L18%2C27.80%20L20%2C27.46%20L22%2C26.97%20L24%2C26.35%20L26%2C25.63%20L28%2C24.83%20L30%2C24.00%20L32%2C23.17%20L34%2C22.37%20L36%2C21.65%20L38%2C21.03%20L40%2C20.54%20L42%2C20.20%20L44%2C20.02%20L46%2C20.02%20L48%2C20.20%20L50%2C20.54%20L52%2C21.03%20L54%2C21.65%20L56%2C22.37%20L58%2C23.17%20L60%2C24.00%20L62%2C24.83%20L64%2C25.63%20L66%2C26.35%20L68%2C26.97%20L68%2C0%20Z%22%20fill%3D%22%23F9F3E7%22%2F%3E%3C%2Fsvg%3E") repeat-x 0 0 / 60px 56px;
+    pointer-events: none;
+  }
+  .process::before { top: 0; }
+  .process::after { bottom: 0; transform: scaleY(-1); }
+  .steps { display: flex; flex-direction: column; gap: 22px; }
+  .step { display: flex; gap: 16px; align-items: flex-start; position: relative; }
+  .step-icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--cream);
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+  .step-icon svg { width: 24px; height: 24px; }
+  .step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 18px;
+    top: 48px;
+    bottom: -22px;
+    width: 12px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='24' viewBox='0 0 12 24'%3E%3Cpath d='M6 0C11 3 11 9 6 12S1 21 6 24' fill='none' stroke='%23B41214' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: repeat-y;
+    background-size: 12px 24px;
+  }
+  .process .section-label { color: var(--accent); opacity: 1; }
+  .step-text h3 { font-size: 18px; margin: 2px 0 4px; color: var(--accent); }
+  .step-text p { font-size: 14px; color: var(--accent); }
+
+  .feature-photo {
+    margin-top: 38px;
+    padding: 6px 0 0;
+    text-align: center;
+  }
+  .feature-quote {
+    font-family: 'Twinkle Star', cursive;
+    color: var(--accent);
+    font-size: 30px;
+    line-height: 1.3;
+    text-align: center;
+    max-width: 340px;
+    margin: 0 auto;
+  }
+
+  /* ---------- Final CTA ---------- */
+  .final-cta { text-align: center; padding: 54px 0 48px; }
+  .title-twinkle { font-family: 'Twinkle Star', cursive; font-weight: 400; line-height: 1.2; }
+  .section-title.title-twinkle { font-size: 38px; }
+  .final-cta h2 { font-size: 36px; margin-bottom: 14px; }
+  .final-cta p { font-size: 15px; color: var(--ink-soft); margin-bottom: 24px; }
+  .cta-buttons { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+
+  /* ---------- Footer ---------- */
+  footer { background: var(--blue); color: var(--accent); padding: 32px 0 26px; text-align: center; }
+  footer p { font-size: 13px; color: var(--accent); margin-bottom: 4px; }
+  footer .socials {
+    margin-top: 14px;
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  footer .socials a {
+    color: var(--accent);
+    border-bottom: 1px solid rgba(180,18,20,0.5);
+    padding-bottom: 2px;
+  }
+
+  /* ---------- Tablet ---------- */
+  @media (min-width: 720px) {
+    .container { max-width: 720px; padding: 0 32px; }
+    .nav-inner { max-width: 720px; padding: 14px 32px; }
+    .nav-inner .brand { font-size: 42px; }
+    .hero { padding: 84px 0 76px; }
+    .hero-content { max-width: 760px; text-align: center; }
+    .hero-eyebrow { font-size: 14px; }
+    .hero h1 { font-size: 50px; }
+    .hero p { font-size: 18px; max-width: 560px; margin: 0 auto 30px; }
+    .intro { padding: 84px 0 70px; }
+    .intro-card { max-width: 640px; margin: 0 auto; padding: 44px 44px 40px; }
+    .intro h2 { font-size: 38px; }
+    .intro p { font-size: 17px; }
+    section { padding: 76px 0; }
+    .section-title { font-size: 40px; }
+    .section-title.title-twinkle { font-size: 50px; }
+    .section-sub { font-size: 17px; max-width: 560px; }
+    .plans { max-width: 540px; margin: 0 auto; }
+    .process { padding: 120px 0; }
+    .feature-quote { font-size: 38px; max-width: 700px; }
+    .final-cta { padding: 84px 0 76px; }
+    .final-cta h2 { font-size: 46px; }
+    .final-cta p { font-size: 17px; }
+    .cta-buttons { flex-direction: row; justify-content: center; gap: 16px; }
+  }
+
+  /* ---------- Desktop ---------- */
+  @media (min-width: 1000px) {
+    .container { max-width: 1140px; padding: 0 40px; }
+    .nav-inner { max-width: 1140px; padding: 14px 40px; }
+    .hero-content { max-width: 900px; }
+    .hero h1 { font-size: 58px; }
+    .plans { max-width: none; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; align-items: stretch; }
+    .plan { display: flex; flex-direction: column; padding: 32px 28px; }
+    .plan > *:nth-last-child(2) { margin-bottom: 26px; }
+    .plan .plan-btn { margin-top: auto; }
+    .steps { flex-direction: row; gap: 32px; align-items: flex-start; }
+    .step { flex: 1; flex-direction: column; align-items: center; text-align: center; gap: 16px; }
+    .step:not(:last-child)::after {
+      left: calc(50% + 32px);
+      top: 18px;
+      bottom: auto;
+      width: calc(100% - 32px);
+      height: 12px;
+      background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2724%27%20height%3D%2712%27%20viewBox%3D%270%200%2024%2012%27%3E%3Cpath%20d%3D%27M0%206%20Q6%200%2012%206%20T24%206%27%20fill%3D%27none%27%20stroke%3D%27%23B41214%27%20stroke-width%3D%271.6%27%20stroke-linecap%3D%27round%27%2F%3E%3C%2Fsvg%3E");
+      background-repeat: repeat-x;
+      background-size: 24px 12px;
+    }
+    .step-text p { max-width: 300px; margin: 0 auto; }
+    .process .section-title { margin-bottom: 46px; }
+  }
+
+  /* ---------- Plan checklists (ticks / crosses) ---------- */
+  .plan-block-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11.5px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: var(--ink);
+    margin: 22px 0 10px;
+    padding-top: 16px;
+    border-top: 2px dashed var(--border);
+  }
+  .areas-count {
+    letter-spacing: 0;
+    text-transform: none;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--ink);
+    background: var(--blue);
+    border: 1.5px solid var(--blue);
+    border-radius: 20px;
+    padding: 2px 10px;
+  }
+  .plan ul.checklist { gap: 9px; margin-bottom: 0; }
+  .checklist li { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.35; padding-left: 0; }
+  .checklist li::before { content: none !important; }
+  .checklist .ck {
+    flex: 0 0 20px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-top: 1px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 12px 12px;
+  }
+  .checklist li.yes .ck { background-color: var(--accent); background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2020%2020%27%3E%3Cpath%20d%3D%27M5.5%2010.5l3%203%206-7%27%20fill%3D%27none%27%20stroke%3D%27white%27%20stroke-width%3D%272.3%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%2F%3E%3C%2Fsvg%3E"); }
+  .checklist li.no .ck { background-color: var(--blue); background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2020%2020%27%3E%3Cpath%20d%3D%27M6.6%206.6l6.8%206.8M13.4%206.6l-6.8%206.8%27%20fill%3D%27none%27%20stroke%3D%27%236F685E%27%20stroke-width%3D%272%27%20stroke-linecap%3D%27round%27%2F%3E%3C%2Fsvg%3E"); }
+  .checklist .area strong { display: block; font-weight: 700; }
+  .checklist .area small { display: block; font-size: 12.5px; color: var(--ink-soft); margin-top: 1px; }
+  .checklist.common .area { font-weight: 400; }
+  .checklist li.no { opacity: 0.5; }
+  .checklist li.no .area strong { font-weight: 600; }
+  .plans-legend { font-size: 13px; text-align: center; max-width: 620px; margin: 26px auto 0; }
+
+  .plan ul.areas { margin-bottom: 4px; }
+  @media (min-width: 1000px) {
+    .plan ul.areas { margin-bottom: 28px; }
+  }
+</style>
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <button id="lang-toggle" class="lang-btn"><span id="lang-flag">🇬🇧</span><span id="lang-code">EN</span></button>
+      <span class="brand" data-i18n="brand">El Nido</span>
+      <a href="#servicios" class="nav-cta" data-i18n="nav-cta">Ver packs</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-content">
+      <div class="hero-eyebrow" data-i18n="hero-eyebrow">Madrid · online en español e inglés</div>
+      <h1 class="title-twinkle" data-i18n="hero-h1">Prepara la llegada de tu bebé, sin agobios</h1>
+      <p data-i18n="hero-p">Asesoría personalizada para que sepas exactamente qué necesitas — y qué no — antes de que llegue.</p>
+      <a href="#servicios" class="btn-primary" data-i18n="hero-btn">Ver los packs</a>
+    </div>
+  </header>
+
+  <section class="intro">
+    <div class="container">
+      <div class="intro-card">
+      <h2 data-i18n="intro-h2">Menos ruido, más claridad</h2>
+      <p data-i18n="intro-p1">Entre listas infinitas, anuncios y consejos contradictorios, decidir qué comprar y cómo organizarte puede agobiar más que ilusionar.</p>
+      <p data-i18n="intro-p2">En El nido te acompañamos con un plan claro, adaptado a tu casa, tu presupuesto y tu familia.</p>
+    </div>
+    </div>
+  </section>
+
+  <section id="servicios" class="section-services">
+    <div class="container">
+      <div class="section-label" data-i18n="serv-label">Servicios</div>
+      <h2 class="section-title title-twinkle" data-i18n="serv-title">Elige tu pack</h2>
+      <p class="section-sub" data-i18n="serv-sub">Tres niveles pensados para distintos momentos y necesidades — sin acompañamiento abierto, con entregables claros.</p>
+
+      <div class="plans">
+        <div class="plan plan--essential">
+          <div class="plan-name" data-i18n="p1-name">Nido Esencial</div>
+          <div class="plan-tagline" data-i18n="p1-tag">Las tres compras grandes, bien elegidas</div>
+          <div class="plan-price">
+            <span class="amount">149€</span>
+            <span class="period" data-i18n="period-1">pago único</span>
+          </div>
+
+          <div class="plan-block-label"><span data-i18n="common-label">En todos los packs</span></div>
+          <ul class="checklist common">
+            <li class="yes"><span class="ck"></span><span class="area"><span data-i18n="c-1">Reunión de 30–45 min (online, ES/EN)</span></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><span data-i18n="c-2">Cuestionario sobre familia, vivienda y presupuesto</span></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><strong data-i18n="c-3">Checklist personalizada</strong><small data-i18n="c-4">Qué es útil comprar / de qué puedes prescindir</small></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><span data-i18n="c-5">Cronograma sobre qué ir preparando desde la semana 28 hasta el nacimiento</span></span></li>
+          </ul>
+
+          <div class="plan-block-label"><span data-i18n="areas-label">Áreas que cubre</span><span class="areas-count" data-i18n="count-1">4 de 10</span></div>
+          <ul class="checklist areas">
+            <li class="yes"><span class="ck"></span><span class="area"><strong data-i18n="a-1">Carrito y silla de coche</strong><small data-i18n="d-gp">Guía + productos</small></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><strong data-i18n="a-2">Cuna</strong><small data-i18n="d-guide">Guía</small></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><strong data-i18n="a-3">Ropa por tallas</strong><small data-i18n="d-guide">Guía</small></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><strong data-i18n="a-5">Salud e higiene</strong><small data-i18n="d-guide">Guía</small></span></li>
+            <li class="no"><span class="ck"></span><span class="area"><strong data-i18n="a-4">Alimentación</strong></span></li>
+            <li class="no"><span class="ck"></span><span class="area"><strong data-i18n="a-6">Bolsa del hospital</strong></span></li>
+            <li class="no"><span class="ck"></span><span class="area"><strong data-i18n="a-7">Habitación del bebé</strong></span></li>
+            <li class="no"><span class="ck"></span><span class="area"><strong data-i18n="a-8">Casa</strong></span></li>
+            <li class="no"><span class="ck"></span><span class="area"><strong data-i18n="a-9">Posparto</strong></span></li>
+            <li class="no"><span class="ck"></span><span class="area"><strong data-i18n="a-10">Trámites y documentación</strong></span></li>
+          </ul>
+
+          <a href="#" class="plan-btn calendly-trigger" data-i18n="p1-btn" onclick="openCalendly(event)">Reservar Nido Esencial</a>
+        </div>
+
+        <div class="plan featured">
+          <div class="plan-badge" data-i18n="badge">Más elegido</div>
+          <div class="plan-name" data-i18n="p2-name">Nido Completo</div>
+          <div class="plan-tagline" data-i18n="p2-tag">Todo el equipamiento del bebé, resuelto</div>
+          <div class="plan-price">
+            <span class="amount">349€</span>
+            <span class="period" data-i18n="period-2">pago único</span>
+          </div>
+
+          <div class="plan-block-label"><span data-i18n="common-label">En todos los packs</span></div>
+          <ul class="checklist common">
+            <li class="yes"><span class="ck"></span><span class="area"><span data-i18n="c-1">Reunión de 30–45 min (online, ES/EN)</span></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><span data-i18n="c-2">Cuestionario sobre familia, vivienda y presupuesto</span></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><strong data-i18n="c-3">Checklist personalizada</strong><small data-i18n="c-4">Qué es útil comprar / de qué puedes prescindir</small></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><span data-i18n="c-5">Cronograma sobre qué ir preparando desde la semana 28 hasta el nacimiento</span></span></li>
+          </ul>
+
+          <div class="plan-block-label"><span data-i18n="areas-label">Áreas que cubre</span><span class="areas-count" data-i18n="count-2">6 de 10</span></div>
+          <ul class="checklist areas">
+            <li class="yes"><span class="ck"></span><span class="area"><strong data-i18n="a-1">Carrito y silla de coche</strong><small data-i18n="d-gpc">Guía + productos + comparativa</small></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><strong data-i18n="a-2">Cuna</strong><small data-i18n="d-gpc">Guía + productos + comparativa</small></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><strong data-i18n="a-3">Ropa por tallas</strong><small data-i18n="d-gp">Guía + productos</small></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><strong data-i18n="a-5">Salud e higiene</strong><small data-i18n="d-gp">Guía + productos</small></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><strong data-i18n="a-4">Alimentación</strong><small data-i18n="d-gp">Guía + productos</small></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><strong data-i18n="a-6">Bolsa del hospital</strong><small data-i18n="d-gp">Guía + productos</small></span></li>
+            <li class="no"><span class="ck"></span><span class="area"><strong data-i18n="a-7">Habitación del bebé</strong></span></li>
+            <li class="no"><span class="ck"></span><span class="area"><strong data-i18n="a-8">Casa</strong></span></li>
+            <li class="no"><span class="ck"></span><span class="area"><strong data-i18n="a-9">Posparto</strong></span></li>
+            <li class="no"><span class="ck"></span><span class="area"><strong data-i18n="a-10">Trámites y documentación</strong></span></li>
+          </ul>
+
+          <a href="#" class="plan-btn plan-btn--outline calendly-trigger" data-i18n="p2-btn" onclick="openCalendly(event)">Reservar Nido Completo</a>
+        </div>
+
+        <div class="plan plan--integral">
+          <div class="plan-name" data-i18n="p3-name">Nido Integral</div>
+          <div class="plan-tagline" data-i18n="p3-tag">Todo resuelto, gestiones incluidas</div>
+          <div class="plan-price">
+            <span class="amount">799€</span>
+            <span class="period" data-i18n="period-3">pago único</span>
+          </div>
+
+          <div class="plan-block-label"><span data-i18n="common-label">En todos los packs</span></div>
+          <ul class="checklist common">
+            <li class="yes"><span class="ck"></span><span class="area"><span data-i18n="c-1">Reunión de 30–45 min (online, ES/EN)</span></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><span data-i18n="c-2">Cuestionario sobre familia, vivienda y presupuesto</span></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><strong data-i18n="c-3">Checklist personalizada</strong><small data-i18n="c-4">Qué es útil comprar / de qué puedes prescindir</small></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><span data-i18n="c-5">Cronograma sobre qué ir preparando desde la semana 28 hasta el nacimiento</span></span></li>
+          </ul>
+
+          <div class="plan-block-label"><span data-i18n="areas-label">Áreas que cubre</span><span class="areas-count" data-i18n="count-3">10 de 10</span></div>
+          <ul class="checklist areas">
+            <li class="yes"><span class="ck"></span><span class="area"><strong data-i18n="a-1">Carrito y silla de coche</strong><small data-i18n="d-gpc">Guía + productos + comparativa</small></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><strong data-i18n="a-2">Cuna</strong><small data-i18n="d-gpc">Guía + productos + comparativa</small></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><strong data-i18n="a-3">Ropa por tallas</strong><small data-i18n="d-gp">Guía + productos</small></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><strong data-i18n="a-5">Salud e higiene</strong><small data-i18n="d-gp">Guía + productos</small></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><strong data-i18n="a-4">Alimentación</strong><small data-i18n="d-gp">Guía + productos</small></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><strong data-i18n="a-6">Bolsa del hospital</strong><small data-i18n="d-gp">Guía + productos</small></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><strong data-i18n="a-7">Habitación del bebé</strong><small data-i18n="d-org">Plan de organización</small></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><strong data-i18n="a-8">Casa</strong><small data-i18n="d-org">Plan de organización</small></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><strong data-i18n="a-9">Posparto</strong><small data-i18n="d-post">Preparación + productos</small></span></li>
+            <li class="yes"><span class="ck"></span><span class="area"><strong data-i18n="a-10">Trámites y documentación</strong><small data-i18n="d-doc">Guía paso a paso</small></span></li>
+          </ul>
+
+          <a href="#" class="plan-btn calendly-trigger" data-i18n="p3-btn" onclick="openCalendly(event)">Reservar Nido Integral</a>
+        </div>
+      </div>
+      <p class="plans-legend" data-i18n="legend">Guía: criterios, cantidades y qué es prescindible comprar. Productos: lista personalizada con enlaces de compra. Comparativa: opciones analizadas para que elijas con criterio.</p>
+    </div>
+  </section>
+
+  <section class="process">
+    <div class="container">
+      <div class="section-label" data-i18n="proc-label">Proceso</div>
+      <h2 class="section-title" data-i18n="proc-title">Cómo funciona</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4.5" width="14" height="17" rx="2"/><rect x="9" y="2.5" width="6" height="4" rx="1"/><path d="M8.5 11.5h7M8.5 15h7M8.5 18.5h4"/></svg></div>
+          <div class="step-text">
+            <h3 data-i18n="step1-h3">Cuéntanos vuestra situación</h3>
+            <p data-i18n="step1-p">Un cuestionario breve sobre vuestra familia, vivienda y prioridades.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-5 4v-4H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/><path d="M8 9.5h8M8 12.5h5"/></svg></div>
+          <div class="step-text">
+            <h3 data-i18n="step2-h3">Sesión personalizada</h3>
+            <p data-i18n="step2-p">Revisamos juntos qué necesitáis de verdad — nada de listas genéricas.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8.5l1.4 1.4L12 7.2M8 14.5l1.4 1.4 2.6-2.7M14.5 9h2.5M14.5 15h2.5"/></svg></div>
+          <div class="step-text">
+            <h3 data-i18n="step3-h3">Recibís vuestro plan</h3>
+            <p data-i18n="step3-p">Checklist, comparativas y cronograma listos para seguir a vuestro ritmo.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-photo">
+        <div class="feature-quote" data-i18n="feature-quote">Disfrutar de la preparación de la llegada de tu bebé sin estrés es posible</div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="final-cta" id="contacto" style="background: var(--cream);">
+    <div class="container">
+      <h2 class="title-twinkle" data-i18n="final-h2">Empecemos a preparar vuestro nido</h2>
+      <p data-i18n="final-p">Cuéntanos en qué momento estáis y os ayudamos a elegir el pack adecuado.</p>
+      <div class="cta-buttons">
+        <a href="https://wa.me/34680451441?text=Hola%2C%20quiero%20más%20información%20sobre%20Nido" class="btn-primary" data-i18n="final-btn1" style="background:var(--accent);">Escríbenos por WhatsApp</a>
+        <a href="https://instagram.com" class="btn-outline" data-i18n="final-btn2" style="border-color:var(--accent); color:var(--accent);">Escríbenos por Instagram</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="brand" data-i18n="brand" style="font-family:'Bree Serif',serif; font-size:26px; color:#B41214;">El nido</div>
+      <div style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#B41214; margin-bottom:10px;">Est. 2026</div>
+      <p data-i18n="footer-tagline">Asesoría para preparar la llegada de tu bebé</p>
+      <p data-i18n="footer-loc">Madrid · Online · Español &amp; English</p>
+      <div class="socials">
+        <a href="https://wa.me/34680451441">WhatsApp</a>
+        <a href="#">Instagram</a>
+        <a href="#">Email</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <script>
+    (function() {
+      var EN = {"nav-cta": "See plans", "hero-eyebrow": "Madrid · online in Spanish & English", "hero-h1": "Get your baby's arrival ready, stress-free", "hero-p": "Personalized guidance so you know exactly what you need — and what you don't — before they arrive.", "hero-btn": "See the plans", "intro-h2": "Less noise, more clarity", "intro-p1": "Between endless lists, ads, and conflicting advice, deciding what to buy and how to get organized can feel more stressful than exciting.", "intro-p2": "At El nido, we guide you with a clear plan, tailored to your home, your budget, and your family.", "serv-label": "Services", "serv-title": "Choose your plan", "serv-sub": "Three levels designed for different moments and needs — no open-ended coaching, just clear deliverables.", "p1-name": "Nido Essentials", "period-1": "one-time payment", "period-2": "one-time payment", "period-3": "one-time payment", "p1-btn": "Book Nido Essentials", "badge": "Most popular", "p2-name": "Nido Complete", "p2-btn": "Book Nido Complete", "p3-name": "Nido Premium", "p3-btn": "Book Nido Premium", "proc-label": "Process", "proc-title": "How it works", "step1-h3": "Tell us about your situation", "step1-p": "A short questionnaire about your family, home, and priorities.", "step2-h3": "Personalized session", "step2-p": "We go over what you really need together — no generic lists.", "step3-h3": "You get your plan", "step3-p": "Checklist, comparisons, and timeline, ready for you to follow at your own pace.", "feature-quote": "Enjoying the preparation for your baby's arrival without stress is possible", "final-h2": "Let's start preparing your nest", "final-p": "Tell us where you are and we'll help you choose the right plan.", "final-btn1": "Message us on WhatsApp", "final-btn2": "Message us on Instagram", "footer-tagline": "Guidance to get ready for your baby's arrival", "footer-loc": "Madrid · Online · Spanish & English", "c-1": "30–45 min session (online, ES/EN)", "c-2": "Questionnaire about your family, home and budget", "c-3": "Personalized checklist", "c-4": "What's worth buying / what you can skip", "c-5": "Timeline for what to prepare from week 28 to birth", "a-1": "Stroller & car seat", "a-2": "Crib", "a-3": "Clothing by size", "a-4": "Feeding", "a-5": "Health & hygiene", "a-6": "Hospital bag", "a-7": "Baby's room", "a-8": "Home", "a-9": "Postpartum", "a-10": "Paperwork", "d-guide": "Guide", "d-gp": "Guide + products", "d-gpc": "Guide + products + comparison", "d-org": "Organization plan", "d-post": "Preparation + products", "d-doc": "Step-by-step guide", "p1-tag": "The three big purchases, chosen well", "count-1": "4 of 10", "p2-tag": "All your baby's gear, sorted", "count-2": "6 of 10", "p3-tag": "Everything sorted, paperwork included", "count-3": "10 of 10", "common-label": "Included in every plan", "areas-label": "Areas covered", "legend": "Guide: criteria, quantities and what's worth skipping. Products: personalized list with purchase links. Comparison: options analyzed so you can choose with confidence."};
+      var ES = {};
+      var nodes = document.querySelectorAll('[data-i18n]');
+      nodes.forEach(function(el) {
+        var key = el.getAttribute('data-i18n');
+        ES[key] = el.textContent;
+      });
+      var current = 'es';
+      var btn = document.getElementById('lang-toggle');
+      function applyLang(lang) {
+        nodes.forEach(function(el) {
+          var key = el.getAttribute('data-i18n');
+          if (key === 'brand') return;
+          var dict = lang === 'en' ? EN : ES;
+          if (dict[key] !== undefined) {
+            el.textContent = dict[key];
+          }
+        });
+        document.documentElement.lang = lang;
+        document.getElementById('lang-flag').textContent = lang === 'en' ? '🇪🇸' : '🇬🇧';
+        document.getElementById('lang-code').textContent = lang === 'en' ? 'ES' : 'EN';
+      }
+      btn.addEventListener('click', function() {
+        current = current === 'es' ? 'en' : 'es';
+        applyLang(current);
+      });
+    })();
+  </script>
+
+  <script>
+    var CALENDLY_URL = "https://calendly.com/luciadcr8/nido";
+
+    function openCalendly(e) {
+      e.preventDefault();
+      if (window.Calendly) {
+        Calendly.initPopupWidget({ url: CALENDLY_URL });
+      } else {
+        window.open(CALENDLY_URL, "_blank");
+      }
+    }
+  </script>
+</body>
+</html>
